@@ -11,6 +11,7 @@ O projeto nasceu como trabalho final do curso de **Desenvolvimento Full Stack da
 **[Visualizar apresentação interativa](https://junta-ai-apresentacao.vercel.app/)**
 
 A apresentação foi desenvolvida para execução diretamente no navegador, preservando animações, transições e elementos visuais interativos.
+Use as setas do teclado para navegar na apresentação.
 
 ## 💡 O que você vai encontrar
 
