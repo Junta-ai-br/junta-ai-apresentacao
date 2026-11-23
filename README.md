@@ -13,6 +13,26 @@ O projeto nasceu como trabalho final do curso de **Desenvolvimento Full Stack da
 A apresentação foi desenvolvida para execução diretamente no navegador, preservando animações, transições e elementos visuais interativos.
 Use as setas do teclado para navegar na apresentação.
 
+## Exportar o PDF oficial
+
+Requer Node.js 22 ou superior. Na primeira execução:
+
+```powershell
+npm.cmd ci
+npx.cmd playwright install chromium
+```
+
+Para gerar e validar os sete slides, execute:
+
+```powershell
+npm.cmd run export:pdf
+```
+
+O arquivo final é `artifacts/Junta-ai_Apresentacao_Oficial.pdf`. A pasta também contém
+capturas de referência, páginas do PDF renderizadas novamente, uma visão geral dos sete
+slides e o relatório `validation.json`. No Linux/macOS, use `npm` e `npx`.
+Consulte [o diagnóstico e os critérios de validação](docs/pdf-export.md).
+
 ## 💡 O que você vai encontrar
 
 Organizada em sete slides, a apresentação percorre os principais aspectos do projeto:

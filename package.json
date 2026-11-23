@@ -1,0 +1,19 @@
+{
+  "name": "junta-ai-apresentacao",
+  "version": "1.0.0",
+  "scripts": {
+    "export:pdf": "node scripts/export-pdf.mjs"
+  },
+  "type": "commonjs",
+  "devDependencies": {
+    "@fontsource/noto-sans": "^5.3.0",
+    "@napi-rs/canvas": "^1.2.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.5.438",
+    "playwright": "^1.65.1",
+    "reveal.js": "5.1.0",
+    "sharp": "^0.35.5",
+    "three": "0.160.0"
+  },
+  "private": true
+}
