@@ -1,4 +1,4 @@
-# Junta.ai — apresentação final
+# Junta.ai | apresentação final
 
 Site estático com os sete slides originais, sem reconstrução ou alteração do layout.
 
