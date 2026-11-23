@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Junta.ai — Apresentação</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#141722; --line:#262a36;
+    --text:#f4f5f8; --muted:#9aa0ad;
+    --purple:#7c4dff; --purple-2:#a78bfa; --teal:#2dd4bf;
+  }
+  html,body{background:var(--bg);margin:0;overflow:hidden}
+  #bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+  .reveal-viewport{background:transparent}
+  .reveal{z-index:1;font-family:'Noto Sans',system-ui,sans-serif;font-size:34px;color:var(--text)}
+  .reveal .slides{text-align:left}
+  .reveal .controls,.reveal .progress{color:var(--purple)}
+  .reveal h1,.reveal h2,.reveal h3{font-family:'Noto Sans',sans-serif;text-transform:none;color:var(--text);margin:0}
+  .reveal h1{font-size:3em;font-weight:800;line-height:1;letter-spacing:-.035em;margin-bottom:.35em}
+  .reveal h2{font-size:2em;font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:.3em}
+  .reveal h3{font-size:.68em;font-weight:700;letter-spacing:-.01em;margin:.55em 0 .2em}
+  .reveal p{margin:0}
+
+  .eyebrow{display:block;font-size:.4em;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:1.1em}
+  .accent{background:linear-gradient(90deg,var(--purple),var(--purple-2),var(--teal),var(--purple));background-size:300% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 8s linear infinite}
+  .lead{font-size:.66em;color:var(--muted);line-height:1.5;max-width:28em}
+  .tag{display:inline-block;margin-top:1.3em;font-size:.38em;color:var(--muted);border:1px solid var(--line);
+    border-radius:999px;padding:.55em 1.1em;background:rgba(20,23,34,.6)}
+
+  .card{background:rgba(20,23,34,.72);border:1px solid var(--line);border-radius:20px;padding:26px 28px;backdrop-filter:blur(8px)}
+  .card p{font-size:.48em;color:var(--muted);line-height:1.45}
+  .icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+    border:1px solid rgba(124,77,255,.35);background:rgba(124,77,255,.08);animation:breathe 5s ease-in-out infinite}
+  .icon svg{width:24px;height:24px;stroke:var(--purple-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+  /* Slide 1 */
+  .intro{max-width:56%}
+  .brand{display:inline-flex;align-items:center;gap:14px;margin-bottom:.7em;animation:float 6s ease-in-out infinite}
+  .brand svg{width:64px;height:64px}
+  .wordmark{font-size:1.15em;font-weight:800;letter-spacing:-.02em}
+  .wordmark span{color:var(--purple)}
+
+  /* Slide 2 */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:1.1em}
+  .grid3 .card:nth-child(2) .icon{animation-delay:-1.6s}
+  .grid3 .card:nth-child(3) .icon{animation-delay:-3.2s}
+
+  /* Slide 3 */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:.9em}
+  .duo .big{font-size:1.25em;font-weight:800;letter-spacing:-.03em;line-height:1}
+  .duo .card{position:relative;overflow:hidden}
+  .duo .card::after{content:"";position:absolute;inset:-40%;background:radial-gradient(circle,rgba(124,77,255,.18),transparent 60%);
+    animation:drift 9s ease-in-out infinite;pointer-events:none}
+  .duo .card:nth-child(2)::after{animation-delay:-4.5s;background:radial-gradient(circle,rgba(45,212,191,.14),transparent 60%)}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:1.1em}
+  .chip{font-size:.4em;padding:.5em 1.05em;border-radius:999px;border:1px solid var(--line);color:var(--muted);
+    background:rgba(20,23,34,.65);animation:float 5s ease-in-out infinite;animation-delay:calc(var(--i) * -.9s)}
+
+  /* Slide 4 */
+  .flow{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:1.2em}
+  .track{position:absolute;left:12%;right:12%;height:2px;
+    background:linear-gradient(90deg,transparent,var(--line) 10%,var(--line) 90%,transparent)}
+  .flow .track{top:34px}
+  .packet{position:absolute;top:-4px;left:0;width:110px;height:10px;border-radius:10px;
+    background:radial-gradient(ellipse at center,var(--purple-2),rgba(124,77,255,0) 70%);animation:travel 4s linear infinite}
+  .step{text-align:center;position:relative}
+  .node{position:relative;z-index:1;width:68px;height:68px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;
+    border:1.5px solid var(--teal);color:var(--teal);background:var(--bg);font-size:.46em;font-weight:700}
+  .node::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:1.5px solid var(--purple);opacity:0;
+    animation:ring 4s ease-out infinite;animation-delay:var(--d)}
+  .step p{font-size:.46em;color:var(--muted)}
+
+  /* Slide 5 */
+  .arch{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:1.1em}
+  .arch .track{top:50%;left:6%;right:6%}
+  .packet.back{animation-direction:reverse;animation-delay:-2s;
+    background:radial-gradient(ellipse at center,var(--teal),rgba(45,212,191,0) 70%)}
+  .box{position:relative;z-index:1;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 20px}
+  .box small{display:block;font-size:.36em;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);font-weight:700}
+  .box b{display:block;font-size:.66em;margin:.35em 0 .2em}
+  .box span{font-size:.42em;color:var(--muted)}
+  .box.hl{border-color:rgba(124,77,255,.6);animation:glow 3.2s ease-in-out infinite}
+  .infra{display:flex;gap:16px;margin-top:1.1em;flex-wrap:wrap}
+  .infra div{font-size:.42em;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:.6em 1em;background:rgba(20,23,34,.55)}
+  .infra b{color:var(--text);font-weight:700;margin-right:.5em}
+
+  /* Slide 6 */
+  .center{text-align:center !important}
+  .live{display:inline-flex;align-items:center;gap:14px;margin-top:.6em;font-size:.62em;font-weight:500;color:var(--text);
+    text-decoration:none;border:1px solid rgba(124,77,255,.55);border-radius:999px;padding:.6em 1.3em;
+    background:rgba(124,77,255,.12);animation:glow 3s ease-in-out infinite}
+  .live i{width:12px;height:12px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(45,212,191,.7);animation:ping 1.8s infinite}
+
+  /* Slide 7 */
+  .motto{display:flex;justify-content:center;gap:.6em;margin:.2em 0 1.2em}
+  .motto span{font-size:.95em;font-weight:800;color:var(--muted);animation:cycle 6s infinite;animation-delay:calc(var(--i) * 2s)}
+  .team{font-size:.36em;color:var(--muted);line-height:1.7;max-width:52em;margin:0 auto}
+  .team b{color:var(--text)}
+
+
+  /* Diferencial */
+  .split{display:grid;grid-template-columns:1fr 480px;gap:30px;align-items:center}
+  .venn{position:relative;width:470px;height:440px}
+  .venn .part{position:absolute;inset:0;pointer-events:none}
+  .venn .c{position:absolute;width:260px;height:260px;border-radius:50%;border:1.5px solid rgba(124,77,255,.6);
+    background:radial-gradient(circle at 50% 40%,rgba(124,77,255,.24),rgba(124,77,255,.05) 70%);animation:orbit 9s ease-in-out infinite}
+  .venn .c.a{left:0;top:0}
+  .venn .c.b{left:210px;top:0;border-color:rgba(45,212,191,.6);background:radial-gradient(circle at 50% 40%,rgba(45,212,191,.2),rgba(45,212,191,.04) 70%);animation-delay:-3s}
+  .venn .c.c3{left:105px;top:170px;border-color:rgba(167,139,250,.65);background:radial-gradient(circle at 50% 40%,rgba(167,139,250,.24),rgba(167,139,250,.05) 70%);animation-delay:-6s}
+  .venn .lbl{position:absolute;text-align:center;font-size:.5em;font-weight:700;line-height:1.25}
+  .venn .lbl small{display:block;font-size:.78em;font-weight:400;color:var(--muted);margin-top:.2em}
+  .venn .core{position:absolute;left:235px;top:185px;translate:-50% -50%;padding:.45em .9em;border-radius:999px;font-size:.62em;font-weight:800;
+    background:var(--bg);border:1.5px solid var(--purple);animation:glow 3s ease-in-out infinite}
+  .venn .core span{color:var(--purple)}
+  .src{font-size:.34em !important;color:var(--muted);margin-top:1.4em !important;opacity:.8}
+
+  /* Ciência aplicada */
+  .formula{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:.2em 0 .5em}
+  .formula span{font-size:.46em;font-weight:600;padding:.55em 1.05em;border-radius:12px;border:1px solid var(--line);background:rgba(20,23,34,.65);color:var(--muted)}
+  .formula b{font-size:.6em;color:var(--purple-2);display:inline-block;animation:nudge 1.6s ease-in-out infinite}
+  .formula .res{color:var(--text);font-weight:800;border-color:rgba(124,77,255,.65);background:rgba(124,77,255,.16);animation:glow 3s ease-in-out infinite}
+
+  /* Comparativo */
+  .cmp{display:grid;grid-template-columns:1.05fr 1fr 1fr 1.3fr;gap:10px;margin-top:.7em;font-size:.5em}
+  .cmp>div{padding:.75em .9em;border-radius:12px;background:rgba(20,23,34,.62);border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;text-align:center}
+  .cmp .h{font-weight:700;color:var(--text);background:transparent;border-color:transparent}
+  .cmp .r{font-weight:700;color:var(--text);background:transparent;border-color:transparent;justify-content:flex-start;text-align:left}
+  .cmp .j{color:var(--text);font-weight:700;border-color:rgba(124,77,255,.6);background:rgba(124,77,255,.14);animation:glow 3.2s ease-in-out infinite}
+  .cmp .jh{color:var(--purple-2);font-weight:800;font-size:1.1em}
+
+  /* Encerramento: QR */
+  .cta{display:flex;align-items:center;justify-content:center;gap:22px;margin:0 0 1em}
+  .cta .qr{width:112px;height:112px;border-radius:12px;animation:glow 3.4s ease-in-out infinite}
+  .cta span{font-size:.5em;color:var(--muted);text-align:left;line-height:1.4}
+  .cta b{display:block;font-size:1.3em;color:var(--text)}
+
+
+  /* Ajuste de respiro tipográfico para evitar corte do título */
+  .reveal h2.wellbeing-title{font-size:1.91em;line-height:1.2;letter-spacing:-.025em;padding:.08em .14em .12em 0;overflow:visible}
+  .wellbeing-title .accent{display:inline-block;padding-right:.1em}
+
+  /* Arquitetura: mesma paleta e linguagem visual dos slides */
+  .architecture{margin-top:.65em;font-size:.44em}
+  .architecture .architecture-row{display:grid;grid-template-columns:1fr 54px 1fr 54px 1.45fr;gap:10px;align-items:center}
+  .architecture .architecture-box{min-height:114px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;
+    border:1px solid rgba(167,139,250,.42);border-radius:18px;background:rgba(20,23,34,.85);padding:15px 17px;position:relative}
+  .architecture .architecture-box strong{font-size:1.35em;color:var(--text);margin:.3em 0}
+  .architecture .architecture-box small{font-size:.84em;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+  .architecture .architecture-box span{color:var(--muted);font-size:.93em;line-height:1.35}
+  .architecture .architecture-box.ai{border-color:rgba(124,77,255,.9);box-shadow:0 0 25px rgba(124,77,255,.14)}
+  .architecture .architecture-arrow{text-align:center;color:var(--teal);font-size:2.2em;text-shadow:0 0 16px rgba(45,212,191,.5);animation:breathe 4s ease-in-out infinite}
+  .architecture .architecture-subrow{display:grid;grid-template-columns:1fr 54px 1fr;gap:12px;align-items:center;margin:13px 0 0 auto;width:52%}
+  .architecture .architecture-subrow .architecture-box{min-height:76px;border-color:rgba(45,212,191,.45)}
+  .architecture .architecture-subrow .architecture-arrow{font-size:1.8em}
+  .architecture .architecture-caption{font-size:.94em;color:var(--muted);margin-top:12px;text-align:center}
+  .architecture .architecture-guard{display:flex;justify-content:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+  .architecture .architecture-guard span{border:1px dashed rgba(45,212,191,.5);border-radius:999px;
+    padding:.48em 1.1em;background:rgba(45,212,191,.06);color:var(--text);font-size:.93em}
+  .team-cta{margin-top:.35em !important;font-size:.51em !important}
+  .team-cta:focus-visible{outline:3px solid var(--teal);outline-offset:5px}
+  .team-cta svg{width:1.15em;height:1.15em;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+
+  .architecture-diagram{width:100%;margin:.3em auto 0}
+  .architecture-diagram svg{width:100%;height:auto;display:block;overflow:visible;filter:drop-shadow(0 0 10px rgba(124,77,255,.08))}
+  .architecture-footer{display:flex;gap:15px;justify-content:center;margin-top:5px}
+  .architecture-footer span{font-size:.36em;color:var(--muted);border:1px solid rgba(45,212,191,.35);border-radius:999px;padding:.45em 1em;background:rgba(20,23,34,.7)}
+
+  @keyframes orbit{0%,100%{translate:0 0}50%{translate:8px -10px}}
+  @keyframes nudge{50%{translate:4px 0;opacity:.5}}
+
+  @keyframes shimmer{to{background-position:300% 0}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes breathe{0%,100%{box-shadow:0 0 0 rgba(124,77,255,0)}50%{box-shadow:0 0 26px rgba(124,77,255,.35)}}
+  @keyframes drift{0%,100%{transform:translate(-10%,-6%)}50%{transform:translate(12%,8%)}}
+  @keyframes travel{from{left:-10%}to{left:100%}}
+  @keyframes ring{0%{transform:scale(.85);opacity:.9}60%{transform:scale(1.5);opacity:0}100%{opacity:0}}
+  @keyframes glow{0%,100%{box-shadow:0 0 0 rgba(124,77,255,0)}50%{box-shadow:0 0 34px rgba(124,77,255,.45)}}
+  @keyframes ping{0%{box-shadow:0 0 0 0 rgba(45,212,191,.7)}80%,100%{box-shadow:0 0 0 14px rgba(45,212,191,0)}}
+  @keyframes cycle{0%,28%{color:var(--text);text-shadow:0 0 26px rgba(124,77,255,.75)}38%,100%{color:var(--muted);text-shadow:none}}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1 · Identificação -->
+    <section>
+      <div class="intro">
+        <div class="brand">
+          <svg viewBox="0 0 64 64" fill="none" stroke="#7c4dff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 8h38a6 6 0 0 1 6 6v26a6 6 0 0 1-6 6H26L10 57V14a6 6 0 0 1 4-6z"/>
+            <path d="M20 36l9-9 7 6 12-12"/><path d="M41 21h7v7"/>
+          </svg>
+          <span class="wordmark">junta<span>.ai</span></span>
+        </div>
+        <h1>Converse.<br>Entenda.<br><span class="accent">Planeje.</span></h1>
+        <p class="lead">Um assistente financeiro conversacional para uma relação mais consciente e tranquila com o dinheiro.</p>
+        <span class="tag">Projeto Final · Desenvolvimento Full Stack · +praTi / Codifica</span>
+      </div>
+      <aside class="notes">
+        ~15s. "Este é o Junta.ai: um assistente financeiro que você usa conversando.
+        Em vez de preencher planilhas, você conta o que aconteceu e ele organiza."
+      </aside>
+    </section>
+
+    <!-- 2 · Problema -->
+    <section>
+      <span class="eyebrow">O problema</span>
+      <h2>Planilhas mostram o quê.<br>Não o <span class="accent">porquê</span>.</h2>
+      <div class="grid3">
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16"/></svg></div>
+          <h3>Esforço constante</h3>
+          <p>Planilhas e formulários exigem tempo e disciplina.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></div>
+          <h3>Números sem contexto</h3>
+          <p>Mostram o saldo, mas ignoram o lado humano do dinheiro.</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg></div>
+          <h3>IA crua não basta</h3>
+          <p>Explica conceitos, mas não reduz o estresse com dívidas (Timmerman, 2024).</p>
+        </div>
+      </div>
+      <aside class="notes">
+        ~15s. Ferramentas tradicionais rastreiam números, mas ignoram o contexto humano: dão o saldo, não o porquê.
+        E só colocar uma IA em cima não resolve: o conhecimento cresce, o estresse continua.
+        Gancho: "a tecnologia precisa ser humanizada".
+      </aside>
+    </section>
+
+    <!-- 3 · Ciência aplicada -->
+    <section>
+      <span class="eyebrow">Ciência aplicada na interface</span>
+      <h2 class="wellbeing-title">A métrica é o <span class="accent">bem-estar</span>.</h2>
+      <div class="formula">
+        <span>Capacidade percebida</span><b>+</b><span>Comportamento positivo</span><b>−</b><span>Estresse financeiro</span><b>=</b><span class="res">Bem-estar</span>
+      </div>
+      <div class="grid3">
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></div>
+          <h3>Chat como diário</h3>
+          <p>Registrar conversando diminui a barreira de entrada (Frisancho).</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><path d="M12 12l6-6"/></svg></div>
+          <h3>Metas como nudges</h3>
+          <p>Estímulos contínuos e não invasivos; intervenções assim elevam a poupança em 4% a 12% (Kaiser &amp; Menkhoff).</p>
+        </div>
+        <div class="card fragment fade-up">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M18 6l-2.5 2.5M8.5 15.5L6 18"/></svg></div>
+          <h3>Contexto automático</h3>
+          <p>Traduz números em narrativas, reduzindo estresse e culpa.</p>
+        </div>
+      </div>
+      <p class="src">Base: Fan &amp; Henager (2021), validada no Brasil pela escala CFPB.</p>
+      <aside class="notes">
+        ~25s. Bem-estar financeiro é um estado psicológico: não é só quanto você ganha, é como se sente sobre o que tem.
+        Por isso a interface foi pensada com ciência: o chat funciona como diário de bolso, as metas funcionam como nudges,
+        e o contexto automático transforma dado bruto em narrativa de impacto.
+      </aside>
+    </section>
+
+    <!-- 4 · Como funciona -->
+    <section>
+      <span class="eyebrow">Como funciona</span>
+      <h2>Clareza por <span class="accent">conversa</span>.</h2>
+      <div class="flow">
+        <div class="track"><span class="packet"></span></div>
+        <div class="step"><div class="node" style="--d:0s">01</div><h3>Você conta</h3><p>em linguagem natural</p></div>
+        <div class="step"><div class="node" style="--d:1s">02</div><h3>A IA entende</h3><p>valor, categoria, contexto</p></div>
+        <div class="step"><div class="node" style="--d:2s">03</div><h3>Tudo se organiza</h3><p>receitas, despesas, metas</p></div>
+        <div class="step"><div class="node" style="--d:3s">04</div><h3>Você acompanha</h3><p>dashboard e evolução</p></div>
+      </div>
+      <aside class="notes">
+        ~20s. Não mostrar exemplo de chat aqui — a demo mostra.
+        "Você fala como falaria com alguém; o Junta transforma isso em registro, organização e visão do todo."
+         Transição para Daniel: "Parece fácil, né? Maaaas... agora o Daniel vai mostrar isso na prática e depois explicar como a mágica acontece."
+      </aside>
+    </section>
+
+    <!-- 5 · Demonstração -->
+    <section class="center">
+      <span class="eyebrow">Demonstração</span>
+      <h1>Agora, na <span class="accent">prática</span>.</h1>
+      <a class="live" href="https://junta-ai.com" target="_blank" rel="noopener"><i></i>junta-ai.com</a>
+      <aside class="notes">
+        Demonstração antes da arquitetura. Reservar até ~2min para a demo.
+        Passagem: "Vamos começar pela experiência real. Depois eu mostro o que existe por trás dela."
+        Roteiro: landing → login → chat (registrar um gasto) → metas → dashboard → tema claro/escuro.
+      </aside>
+    </section>
+
+    <!-- 6 · Por trás da experiência -->
+    <section>
+      <span class="eyebrow">Por trás da experiência</span>
+      <h2>IA + Full Stack + <span class="accent">segurança</span>.</h2>
+      <div class="architecture-diagram" role="img" aria-label="Fluxo: Frontend React Vite para Backend Spring Boot, conectado ao PostgreSQL autoritativo. Backend troca mensagens, contexto e snapshots com AI Service FastAPI Pydantic. AI Service usa rota semântica CrewAI e Gemini e perfil experimental MCP.">
+        <svg viewBox="0 0 1160 350" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <marker id="arr-teal" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#2dd4bf"/></marker>
+            <marker id="arr-purple" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#a78bfa"/></marker>
+          </defs>
+          <g fill="#141722" stroke="#66538e" stroke-width="1.7">
+            <rect x="12" y="150" width="144" height="82" rx="14"/><rect x="202" y="150" width="150" height="82" rx="14"/>
+            <rect x="209" y="13" width="137" height="93" rx="17" stroke="#2dd4bf"/>
+            <rect x="539" y="150" width="160" height="82" rx="14" stroke="#7c4dff"/>
+            <rect x="860" y="75" width="141" height="80" rx="14"/><rect x="1031" y="75" width="117" height="80" rx="14"/>
+            <rect x="860" y="245" width="141" height="80" rx="14" stroke="#2dd4bf"/>
+          </g>
+          <!-- Trilhas independentes: cada seta termina na borda do componente de destino. -->
+          <g stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-teal)">
+            <path d="M156 180 H202"/>
+            <path d="M352 180 H539"/>
+            <!-- PostgreSQL → Backend: retorno de dados, separado da seta de ida -->
+            <path d="M301 106 V150"/>
+            <path d="M699 174 H744 V115 H860"/>
+            <path d="M1001 110 H1031"/>
+            <!-- Saída independente do AI Service pela base, até o MCP -->
+            <path d="M619 232 V338 H830 V285 H860"/>
+          </g>
+          <g stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" marker-end="url(#arr-purple)">
+            <path d="M202 214 H156"/>
+            <path d="M539 219 H352"/>
+            <path d="M277 150 V106"/>
+            <!-- Retorno CrewAI → AI Service em trilha própria -->
+            <path d="M860 145 H808 V202 H699"/>
+            <!-- Retorno MCP → AI Service em trilha própria -->
+            <path d="M860 260 H776 V224 H699"/>
+          </g>
+          <!-- Relação conceitual CrewAI/MCP: não confundir com rota de execução direta -->
+          <path d="M930 155 V245" stroke="#a78bfa" stroke-width="1.9" stroke-dasharray="5 6" fill="none" opacity=".85"/>
+          <g fill="#f4f5f8" text-anchor="middle" font-family="Noto Sans, sans-serif">
+            <text x="84" y="181" font-size="17" font-weight="700">Frontend</text><text x="84" y="204" font-size="13" fill="#aab0bd">React / Vite</text>
+            <text x="277" y="181" font-size="17" font-weight="700">Backend</text><text x="277" y="204" font-size="13" fill="#aab0bd">Spring Boot</text>
+            <text x="277" y="42" font-size="16" font-weight="700">PostgreSQL</text><text x="277" y="66" font-size="12" fill="#2dd4bf">Estado financeiro</text><text x="277" y="83" font-size="12" fill="#2dd4bf">autoritativo</text>
+            <text x="619" y="179" font-size="17" font-weight="700">AI Service</text><text x="619" y="204" font-size="13" fill="#aab0bd">FastAPI / Pydantic</text>
+            <text x="930" y="105" font-size="17" font-weight="700">CrewAI</text><text x="930" y="126" font-size="12" fill="#aab0bd">Intenção / interpretação</text>
+            <text x="1090" y="105" font-size="17" font-weight="700">Gemini</text><text x="1090" y="126" font-size="12" fill="#aab0bd">google-genai</text>
+            <text x="930" y="274" font-size="17" font-weight="700">MCP</text><text x="930" y="295" font-size="12" fill="#aab0bd">Contratos em</text><text x="930" y="311" font-size="12" fill="#aab0bd">proposta</text>
+          </g>
+          <!-- Rótulos posicionados fora dos segmentos de conexão -->
+          <g font-family="Noto Sans, sans-serif" font-size="12" fill="#e0d8ff" text-anchor="middle">
+            <text x="447" y="150">Mensagem, contexto</text><text x="447" y="165">e snapshot</text>
+            <text x="447" y="248">Resposta ou proposta</text><text x="447" y="263">estruturada</text>
+            <text x="785" y="88">Rota semântica</text><text x="785" y="103">habilitada</text>
+            <text x="739" y="318">Perfil experimental</text>
+          </g>
+        </svg>
+        <div class="architecture-footer"><span>Segurança · Spring Security · JWT · OWASP</span><span>Infraestrutura · Docker · NGINX · Azure</span></div>
+      </div>
+      <aside class="notes">
+        ~30–40s, após a demonstração. Mostrar como a experiência é sustentada pela arquitetura. Agentes especializados orquestrados pelo CrewAI;
+        o MCP define contexto, recursos e limites da IA. Segurança é transversal por lidar com dados financeiros.
+         Ao final, devolver a palavra para o encerramento e agradecimento à equipe.
+      </aside>
+    </section>
+
+    <!-- 7 · Encerramento -->
+    <section class="center">
+      <h1 style="font-size:2.6em">Seu dinheiro.<br><span class="accent">Do seu jeito.</span></h1>
+      <div class="motto">
+        <span style="--i:0">Converse.</span><span style="--i:1">Entenda.</span><span style="--i:2">Planeje.</span>
+      </div>
+      <div class="cta">
+        <svg class="qr" viewBox="-2 -2 29 29" shape-rendering="crispEdges"><rect x="-2" y="-2" width="29" height="29" rx="1.5" fill="#fff"/><path fill="#0b0d12" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM13 0h1v1h-1zM14 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM12 1h1v1h-1zM14 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM15 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM12 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM11 7h1v1h-1zM13 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM14 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM2 9h1v1h-1zM4 9h1v1h-1zM8 9h1v1h-1zM9 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM14 9h1v1h-1zM15 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM21 9h1v1h-1zM22 9h1v1h-1zM23 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM4 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM15 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM0 11h1v1h-1zM1 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM9 11h1v1h-1zM10 11h1v1h-1zM11 11h1v1h-1zM14 11h1v1h-1zM16 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM0 12h1v1h-1zM5 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM9 12h1v1h-1zM11 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM18 12h1v1h-1zM19 12h1v1h-1zM24 12h1v1h-1zM0 13h1v1h-1zM1 13h1v1h-1zM2 13h1v1h-1zM4 13h1v1h-1zM5 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM16 13h1v1h-1zM20 13h1v1h-1zM23 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM5 15h1v1h-1zM9 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM6 16h1v1h-1zM7 16h1v1h-1zM8 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM16 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM20 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM10 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM12 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM24 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM16 19h1v1h-1zM20 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM8 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM13 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM23 21h1v1h-1zM24 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM9 22h1v1h-1zM11 22h1v1h-1zM13 22h1v1h-1zM15 22h1v1h-1zM20 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM23 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM18 24h1v1h-1zM21 24h1v1h-1zM24 24h1v1h-1z"/></svg>
+        <span>Teste o assistente<b>junta-ai.com</b></span>
+      </div>
+      <a class="live team-cta" href="https://junta-ai.com/sobre" target="_blank" rel="noopener noreferrer" aria-label="Conheça a equipe Junta.ai, abre em nova aba">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2M17 5a3 3 0 0 1 0 6M18 14a5 5 0 0 1 3 5v1"/></svg>
+        Conheça a Equipe Junta.ai
+      </a>
+      <p style="font-size:.35em;color:var(--muted);margin-top:1.1em">+praTi / Codifica · Obrigado!</p>
+      <aside class="notes">
+        ~15s. "O Junta não existe para controlar as finanças de ninguém, e sim para ajudar cada pessoa a entender melhor o próprio dinheiro."
+        Mencionar testes com usuários reais em outubro. Abrir para perguntas.
+      </aside>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width:1280, height:720, margin:0.06,
+    hash:true, center:true, controls:true, progress:true,
+    transition:'fade', backgroundTransition:'none',
+    plugins:[RevealNotes]
+  });
+</script>
+
+<script type="module">
+  import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+  const canvas = document.getElementById('bg');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0b0d12, 0.03);
+  const camera = new THREE.PerspectiveCamera(55, innerWidth / innerHeight, 0.1, 200);
+  camera.position.set(0, 0, 18);
+
+  const PURPLE = 0x7c4dff, PURPLE2 = 0xa78bfa, TEAL = 0x2dd4bf;
+
+  function dotTexture(){
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const g = c.getContext('2d');
+    const gr = g.createRadialGradient(32,32,0,32,32,32);
+    gr.addColorStop(0,'rgba(255,255,255,1)');
+    gr.addColorStop(.3,'rgba(255,255,255,.55)');
+    gr.addColorStop(1,'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0,0,64,64);
+    return new THREE.CanvasTexture(c);
+  }
+  const tex = dotTexture();
+
+  // Campo de partículas
+  const N = 1800;
+  const pos = new Float32Array(N*3), col = new Float32Array(N*3), seed = new Float32Array(N);
+  const palette = [new THREE.Color(PURPLE), new THREE.Color(PURPLE2), new THREE.Color(TEAL)];
+  for (let i = 0; i < N; i++){
+    pos[i*3]   = (Math.random()-.5)*70;
+    pos[i*3+1] = (Math.random()-.5)*40;
+    pos[i*3+2] = (Math.random()-.5)*40 - 5;
+    const c = Math.random() < .15 ? palette[2] : palette[Math.random() < .5 ? 0 : 1];
+    col.set([c.r, c.g, c.b], i*3);
+    seed[i] = Math.random()*Math.PI*2;
+  }
+  const basePos = pos.slice();
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+  const pMat = new THREE.PointsMaterial({ size:.12, map:tex, vertexColors:true, transparent:true, opacity:.8,
+    depthWrite:false, blending:THREE.AdditiveBlending });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  // Núcleo
+  const core = new THREE.Group(); scene.add(core);
+  const icoMat = new THREE.MeshBasicMaterial({ color:PURPLE, wireframe:true, transparent:true, opacity:.45 });
+  const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(3, 1), icoMat);
+  const innerMat = new THREE.PointsMaterial({ color:PURPLE2, size:.09, map:tex, transparent:true, opacity:.9,
+    depthWrite:false, blending:THREE.AdditiveBlending });
+  const inner = new THREE.Points(new THREE.IcosahedronGeometry(2.1, 4), innerMat);
+  core.add(ico, inner);
+
+  // Órbita com "moedas"
+  const orbit = new THREE.Group(); orbit.rotation.x = Math.PI*.42; orbit.rotation.y = .25; core.add(orbit);
+  const ringMat = new THREE.MeshBasicMaterial({ color:TEAL, transparent:true, opacity:.5 });
+  orbit.add(new THREE.Mesh(new THREE.TorusGeometry(4.4, .012, 8, 240), ringMat));
+  const spin = new THREE.Group(); orbit.add(spin);
+  const coinMats = [];
+  for (let i = 0; i < 9; i++){
+    const m = new THREE.MeshBasicMaterial({ color: i % 3 === 0 ? TEAL : PURPLE2, transparent:true, opacity:.95 });
+    coinMats.push(m);
+    const coin = new THREE.Mesh(new THREE.SphereGeometry(i % 3 === 0 ? .14 : .09, 16, 16), m);
+    const a = (i/9)*Math.PI*2;
+    coin.position.set(Math.cos(a)*4.4, Math.sin(a)*4.4, 0);
+    spin.add(coin);
+  }
+
+  // Linha de tendência (referência ao logo)
+  const T = 90, tPts = [];
+  for (let i = 0; i < T; i++){
+    const x = -16 + i*(32/(T-1));
+    const y = -7.5 + i*.055 + Math.sin(i*.45)*.55 + Math.sin(i*.13)*.4;
+    tPts.push(new THREE.Vector3(x, y, -8));
+  }
+  const tGeo = new THREE.BufferGeometry().setFromPoints(tPts);
+  const tMat = new THREE.LineBasicMaterial({ color:TEAL, transparent:true, opacity:.35 });
+  scene.add(new THREE.Line(tGeo, tMat));
+
+  const mats = [[icoMat,.45],[innerMat,.9],[ringMat,.5],...coinMats.map(m => [m,.95])];
+
+  // Estado do núcleo por slide
+  const states = [
+    { x: 6.4, y: .2, z: 0,  s:1.15, o:1   },
+    { x: 9,   y: 3,  z:-4,  s:.8,   o:.5  },
+    { x: 9.5, y:-4,  z:-5,  s:.8,   o:.4  },
+    { x: 0,   y:-7.5,z:-6,  s:1.3,  o:.4  },
+    { x: 0,   y: 0,  z:-2,  s:1.55, o:.9, pulse:true },
+    { x: 11,  y:-5,  z:-7,  s:.65,  o:.12 },
+    { x: 0,   y: .5, z:-4,  s:1.25, o:.7  }
+  ];
+  const keys = ['x','y','z','s','o'];
+  const startIdx = Reveal.isReady() ? Reveal.getIndices().h : 0;
+  let target = states[startIdx] || states[0];
+  const cur = { ...target };
+  const setTarget = i => { target = states[i] || states[0]; };
+  Reveal.on('ready', e => setTarget(e.indexh));
+  Reveal.on('slidechanged', e => setTarget(e.indexh));
+
+  let mx = 0, my = 0;
+  addEventListener('pointermove', e => { mx = e.clientX/innerWidth - .5; my = e.clientY/innerHeight - .5; });
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  const clock = new THREE.Clock();
+  (function tick(){
+    const t = clock.getElapsedTime();
+    keys.forEach(k => cur[k] += (target[k] - cur[k]) * .04);
+
+    core.position.set(cur.x, cur.y + Math.sin(t*.6)*.25, cur.z);
+    core.scale.setScalar(cur.s * (target.pulse ? 1 + Math.sin(t*2.4)*.04 : 1));
+    ico.rotation.set(t*.12, t*.18, 0);
+    inner.rotation.y = -t*.1;
+    spin.rotation.z = t*.35;
+    mats.forEach(([m, b]) => m.opacity = b * cur.o);
+
+    for (let i = 0; i < N; i++) pos[i*3+1] = basePos[i*3+1] + Math.sin(t*.4 + seed[i])*.35;
+    pGeo.attributes.position.needsUpdate = true;
+    particles.rotation.y = t*.015;
+
+    tGeo.setDrawRange(0, Math.min(T, Math.floor((t*14) % (T + 45))));
+
+    camera.position.x += (mx*1.6 - camera.position.x)*.03;
+    camera.position.y += (-my*1.0 - camera.position.y)*.03;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  })();
+</script>
+</body>
+</html>
